@@ -1,0 +1,22 @@
+{
+    "name": "gianluca-pettenon/soap-totvs",
+    "authors": [
+        {
+            "name": "Gianluca Pettenon",
+            "homepage": "https://gianlucapettenon.com.br"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "laminas/laminas-soap": "^2.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "App/"
+        }
+    },
+    "scripts": {
+        "start": "php -S 0.0.0.0:8080",
+        "test": "phpunit"
+    }
+}
