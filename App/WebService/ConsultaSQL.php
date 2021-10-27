@@ -15,11 +15,11 @@ class ConsultaSQL
     private $system;
     private $parameters;
 
-    public function __construct()
+    public function __construct(WebService $ws)
     {
-        $this->connection = WebService::getClient('/wsConsultaSQL/MEX?wsdl');
+        $this->connection = $ws->getClient('/wsConsultaSQL/MEX?wsdl');
     }
-
+    
     public function setSentence(string $sentence): void
     {
         $this->sentence = $sentence;

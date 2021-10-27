@@ -17,9 +17,9 @@ class DataServer
     private $filter;
     private $xml;
 
-    public function __construct()
+    public function __construct(WebService $ws)
     {
-        $this->connection = WebService::getClient('/wsDataServer/MEX?wsdl');
+        $this->connection = $ws->getClient('/wsDataServer/MEX?wsdl');
     }
 
     public function setDataServer(string $dataServer): void
