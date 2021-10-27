@@ -14,9 +14,9 @@ class Process
     private $process;
     private $xml;
 
-    public function __construct()
+    public function __construct(WebService $ws)
     {
-        $this->connection = WebService::getClient('/wsProcess/MEX?wsdl');
+        $this->connection = $ws->getClient('/wsProcess/MEX?wsdl');
     }
 
     public function setProcess(string $process): void
