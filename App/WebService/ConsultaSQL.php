@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @link https://tdn.totvs.com/display/public/LRM/TBC+-+Exemplo+Web+Service+Consulta+SQL
+**/
+
 namespace App\WebService;
 
 use App\Connection\WebService;
