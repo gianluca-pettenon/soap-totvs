@@ -10,7 +10,7 @@ class WebService
     private const userName = "rm";
     private const passWord = "rm";
 
-    public static function getClient(string $path)
+    public static function getClient(string $path) : Client
     {
         try {
 

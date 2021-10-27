@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @link https://tdn.totvs.com/display/public/LRM/TBC+-+Web+Service+Process
+**/
+
 namespace App\WebService;
 
 use App\Connection\WebService;
@@ -20,7 +24,7 @@ class Process
         $this->process = $process;
     }
 
-    public function setXML(array $xml = []): void
+    public function setXML(string $xml): void
     {
         $this->xml = $xml;
     }
@@ -36,7 +40,7 @@ class Process
             ]);
 
             $return = $execute->ExecuteWithXmlParamsResult;
-            
+
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }
