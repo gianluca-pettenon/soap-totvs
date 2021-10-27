@@ -1,4 +1,4 @@
-This repository is the help to consume TBC from TOTVS.
+This repository helps in the consumption of TOTVS Web Service via SOAP with PHP.
 ============================
 
 ## Installation
