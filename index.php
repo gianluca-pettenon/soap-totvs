@@ -1,13 +1,13 @@
 <?php
+
 // Composer autoloading
-include __DIR__ . '/vendor/autoload.php';
+include_once __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
+$dotenv->load();
 
 use App\Connection\WebService;
-
 use App\WebService\ConsultaSQL;
-use App\WebService\Process;
-use App\WebService\DataServer;
-
 
 $ws = new ConsultaSQL(new WebService);
 
