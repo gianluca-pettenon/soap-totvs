@@ -7,7 +7,7 @@ This repository helps in the consumption of TOTVS Web Service via SOAP with PHP.
 
 ## Settings
 - Enable the `php_soap.dll` extension in your `php.ini`.
-- Rename the `.env.example` file to `.env` and fill in your settings.
+- Rename the `env` file to `.env` and fill in your settings.
 
 ## Instruction for use
 - In each class located in the `App\WebService` directory, there is a `link` to inform how to pass the parameters.

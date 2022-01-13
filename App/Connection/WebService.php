@@ -6,6 +6,11 @@ use Laminas\Soap\Client;
 
 class WebService
 {
+    /**
+     * @param string $path
+     * @return Client
+     */
+
     public function getClient(string $path) : Client
     {
         try {

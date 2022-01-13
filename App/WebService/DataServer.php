@@ -22,25 +22,51 @@ class DataServer
         $this->connection = $ws->getClient('/wsDataServer/MEX?wsdl');
     }
 
+    /**
+     * @param string $dataServer
+     * @return void
+     */
+
     public function setDataServer(string $dataServer): void
     {
         $this->dataServer = $dataServer;
     }
+
+    /**
+     * @param int $primaryKey
+     * @return void
+     */
 
     public function setPrimaryKey(int $primaryKey): void
     {
         $this->primaryKey = $primaryKey;
     }
 
+    /**
+     * @param string $context
+     * @return void
+     */
+
     public function setContext(string $context): void
     {
         $this->context = $context;
     }
 
+    /**
+     * @param string $filter
+     * @return void
+     */
+
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;
     }
+
+    /**
+     * @param string $table
+     * @param array $data
+     * @return void
+     */
 
     public function setXML(string $table, array $data) : void
     {
