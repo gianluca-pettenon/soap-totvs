@@ -19,10 +19,20 @@ class Process
         $this->connection = $ws->getClient('/wsProcess/MEX?wsdl');
     }
 
+    /**
+     * @param string $process
+     * @return void
+     */
+
     public function setProcess(string $process): void
     {
         $this->process = $process;
     }
+
+    /**
+     * @param string $xml
+     * @return void
+     */
 
     public function setXML(string $xml): void
     {
