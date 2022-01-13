@@ -7,15 +7,16 @@
 namespace App\WebService;
 
 use App\Connection\WebService;
+use App\Utils\Serialize;
 
 class DataServer
 {
+    private string $dataServer;
+    private int $primaryKey;
+    private string $context;
+    private string $filter;
+    private string $xml;
     private $connection;
-    private $dataServer;
-    private $primaryKey;
-    private $context;
-    private $filter;
-    private $xml;
 
     public function __construct(WebService $ws)
     {
@@ -82,7 +83,11 @@ class DataServer
         $this->xml = $dom->saveXML();
     }
 
-    public function saveRecord()
+    /**
+     * @return int
+     */
+
+    public function saveRecord(): int
     {
         return $this->connection->SaveRecord([
             'DataServerName'    => $this->dataServer,
@@ -91,7 +96,11 @@ class DataServer
         ]);
     }
 
-    public function readRecord()
+    /**
+     * @return array
+     */
+
+    public function readRecord(): array
     {
         try {
 
@@ -101,7 +110,7 @@ class DataServer
                 'Contexto'          => $this->context
             ]);
 
-            $result = json_encode(simplexml_load_string($execute->ReadRecordResult));
+            $result = Serialize::result($execute->ReadRecordResult);
 
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
@@ -110,7 +119,11 @@ class DataServer
         return $result;
     }
 
-    public function deleteRecord()
+    /**
+     * @return int
+     */
+
+    public function deleteRecord(): int
     {
         try {
 
@@ -129,7 +142,11 @@ class DataServer
         return $result;
     }
 
-    public function deleteRecordByKey()
+    /**
+     * @return array
+     */
+
+    public function deleteRecordByKey(): array
     {
         try {
 
@@ -139,7 +156,7 @@ class DataServer
                 'Contexto'          => $this->context,
             ]);
 
-            $result = json_decode(json_encode(simplexml_load_string($execute->DeleteRecordByKeyResult)), true);
+            $result = Serialize::result($execute->DeleteRecordByKeyResult);
 
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
@@ -148,7 +165,11 @@ class DataServer
         return $result;
     }
 
-    public function readView()
+    /**
+     * @return array
+     */
+
+    public function readView(): array
     {
         try {
 
@@ -158,7 +179,7 @@ class DataServer
                 'Contexto'          => $this->context
             ]);
 
-            $result = json_decode(json_encode(simplexml_load_string($execute->ReadViewResult)), true);
+            $result = Serialize::result($execute->ReadViewResult);
 
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;

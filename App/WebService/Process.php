@@ -10,9 +10,9 @@ use App\Connection\WebService;
 
 class Process
 {
+    private string $process;
+    private string $xml;
     private $connection;
-    private $process;
-    private $xml;
 
     public function __construct(WebService $ws)
     {
@@ -39,7 +39,11 @@ class Process
         $this->xml = $xml;
     }
 
-    public function execute()
+    /**
+     * @return int
+     */
+
+    public function execute(): int
     {
 
         try {
