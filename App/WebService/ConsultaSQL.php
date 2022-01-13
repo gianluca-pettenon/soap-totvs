@@ -7,13 +7,14 @@
 namespace App\WebService;
 
 use App\Connection\WebService;
+use App\Utils\Serialize;
 
 class ConsultaSQL
 {
-    private $sentence;
-    private $affiliate;
-    private $system;
-    private $parameters;
+    private string $sentence;
+    private int $affiliate;
+    private string $system;
+    private array $parameters;
     private $connection;
 
     public function __construct(WebService $ws)
@@ -84,7 +85,7 @@ class ConsultaSQL
                 'parameters' => $this->parameters,
             ]);
 
-            $result = json_decode(json_encode(simplexml_load_string($execute->RealizarConsultaSQLResult)), true);
+            $result = Serialize::result($execute->RealizarConsultaSQLResult);
 
         } catch (\Exception $e) {
             echo $e->getMessage();
