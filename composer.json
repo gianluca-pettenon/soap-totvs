@@ -3,13 +3,13 @@
     "authors": [
         {
             "name": "Gianluca Pettenon",
-            "homepage": "https://gianlucapettenon.com.br"
+            "homepage": "https://gianlucapettenon.dev"
         }
     ],
     "require": {
-        "php": "^7.3",
-        "laminas/laminas-soap": "^2.8",
-        "vlucas/phpdotenv": "^5.4"
+        "php": ">=8.0",
+        "vlucas/phpdotenv": "^5.5",
+        "laminas/laminas-soap": "^2.12"
     },
     "autoload": {
         "psr-4": {
@@ -17,7 +17,6 @@
         }
     },
     "scripts": {
-        "start": "php -S localhost:8080",
-        "test": "phpunit"
+        "start": "php -S localhost:8080"
     }
 }

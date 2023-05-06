@@ -6,24 +6,22 @@
 
 namespace App\WebService;
 
-use App\Connection\WebService;
+use App\Interface\AdapterInterface;
 
 class Process
 {
     private string $process;
     private string $xml;
-    private $connection;
 
-    public function __construct(WebService $ws)
+    public function __construct(private AdapterInterface $adapterInterface)
     {
-        $this->connection = $ws->getClient('/wsProcess/MEX?wsdl');
+        $this->adapterInterface = $adapterInterface->getAdapter('/wsProcess/MEX?wsdl');
     }
 
     /**
      * @param string $process
      * @return void
      */
-
     public function setProcess(string $process): void
     {
         $this->process = $process;
@@ -33,7 +31,6 @@ class Process
      * @param string $xml
      * @return void
      */
-
     public function setXML(string $xml): void
     {
         $this->xml = $xml;
@@ -42,23 +39,20 @@ class Process
     /**
      * @return int
      */
-
     public function execute(): int
     {
 
         try {
 
-            $execute = $this->connection->ExecuteWithXmlParams([
+            $execute = $this->adapterInterface->ExecuteWithXmlParams([
                 'ProcessServerName' => $this->process,
                 'strXmlParams'      => $this->xml
             ]);
-
-            $return = $execute->ExecuteWithXmlParamsResult;
 
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }
 
-        return $return;
+        return $execute->ExecuteWithXmlParamsResult;
     }
 }

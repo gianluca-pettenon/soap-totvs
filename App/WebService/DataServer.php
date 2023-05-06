@@ -6,8 +6,7 @@
 
 namespace App\WebService;
 
-use App\Connection\WebService;
-use App\Utils\Serialize;
+use App\Interface\AdapterInterface;
 
 class DataServer
 {
@@ -16,18 +15,16 @@ class DataServer
     private string $context;
     private string $filter;
     private string $xml;
-    private $connection;
 
-    public function __construct(WebService $ws)
+    public function __construct(private AdapterInterface $adapterInterface)
     {
-        $this->connection = $ws->getClient('/wsDataServer/MEX?wsdl');
+        $this->adapterInterface = $adapterInterface->getAdapter('/wsDataServer/MEX?wsdl');
     }
 
     /**
      * @param string $dataServer
      * @return void
      */
-
     public function setDataServer(string $dataServer): void
     {
         $this->dataServer = $dataServer;
@@ -37,7 +34,6 @@ class DataServer
      * @param int $primaryKey
      * @return void
      */
-
     public function setPrimaryKey(int $primaryKey): void
     {
         $this->primaryKey = $primaryKey;
@@ -47,7 +43,6 @@ class DataServer
      * @param string $context
      * @return void
      */
-
     public function setContext(string $context): void
     {
         $this->context = $context;
@@ -57,7 +52,6 @@ class DataServer
      * @param string $filter
      * @return void
      */
-
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;
@@ -68,7 +62,6 @@ class DataServer
      * @param array $data
      * @return void
      */
-
     public function setXML(string $table, array $data) : void
     {
         $dom = new \DOMDocument('1.0', 'utf-8');
@@ -86,10 +79,9 @@ class DataServer
     /**
      * @return int
      */
-
     public function saveRecord(): int
     {
-        return $this->connection->SaveRecord([
+        return $this->adapterInterface->SaveRecord([
             'DataServerName'    => $this->dataServer,
             'XML'               => $this->xml,
             'Contexto'          => $this->context
@@ -99,92 +91,80 @@ class DataServer
     /**
      * @return array
      */
-
     public function readRecord(): array
     {
         try {
 
-            $execute = $this->connection->ReadRecord([
+            $execute = $this->adapterInterface->ReadRecord([
                 'DataServerName'    => $this->dataServer,
                 'PrimaryKey'        => $this->primaryKey,
                 'Contexto'          => $this->context
             ]);
 
-            $result = Serialize::result($execute->ReadRecordResult);
-
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }
 
-        return $result;
+        return $execute->ReadRecordResult;
     }
 
     /**
      * @return int
      */
-
     public function deleteRecord(): int
     {
         try {
 
-            $execute = $this->connection->DeleteRecord([
+            $execute = $this->adapterInterface->DeleteRecord([
                 'DataServerName'    => $this->dataServer,
                 'XML'               => $this->xml,
                 'Contexto'          => $this->context
             ]);
 
-            $result = $execute->DeleteRecordResult;
-
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }
 
-        return $result;
+        return $execute->DeleteRecordResult;
     }
 
     /**
      * @return array
      */
-
     public function deleteRecordByKey(): array
     {
         try {
 
-            $execute = $this->connection->DeleteRecordByKey([
+            $execute = $this->adapterInterface->DeleteRecordByKey([
                 'DataServerName'    => $this->dataServer,
                 'PrimaryKey'        => $this->primaryKey,
                 'Contexto'          => $this->context,
             ]);
 
-            $result = Serialize::result($execute->DeleteRecordByKeyResult);
-
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }
 
-        return $result;
+        return $execute->DeleteRecordByKeyResult;
     }
 
     /**
      * @return array
      */
-
     public function readView(): array
     {
         try {
 
-            $execute = $this->connection->ReadView([
+            $execute = $this->adapterInterface->ReadView([
                 'DataServerName'    => $this->dataServer,
                 'Filtro'            => $this->filter,
                 'Contexto'          => $this->context
             ]);
 
-            $result = Serialize::result($execute->ReadViewResult);
-
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
         }
 
-        return $result;
+        return $execute->ReadViewResult;
     }
 }

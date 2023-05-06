@@ -6,8 +6,7 @@
 
 namespace App\WebService;
 
-use App\Connection\WebService;
-use App\Utils\Serialize;
+use App\Interface\AdapterInterface;
 
 class ConsultaSQL
 {
@@ -15,18 +14,16 @@ class ConsultaSQL
     private int $affiliate;
     private string $system;
     private array $parameters;
-    private $connection;
 
-    public function __construct(WebService $ws)
+    public function __construct(private AdapterInterface $adapterInterface)
     {
-        $this->connection = $ws->getClient('/wsConsultaSQL/MEX?wsdl');
+        $this->adapterInterface = $adapterInterface->getAdapter('/wsConsultaSQL/MEX?wsdl');
     }
 
     /**
      * @param string $sentence
      * @return void
      */
-
     public function setSentence(string $sentence): void
     {
         $this->sentence = $sentence;
@@ -36,7 +33,6 @@ class ConsultaSQL
      * @param int $affiliate
      * @return void
      */
-
     public function setAffiliate(int $affiliate): void
     {
         $this->affiliate = $affiliate;
@@ -46,7 +42,6 @@ class ConsultaSQL
      * @param string $system
      * @return void
      */
-
     public function setSystem(string $system): void
     {
         $this->system = $system;
@@ -56,16 +51,13 @@ class ConsultaSQL
      * @param array $params
      * @return void
      */
-
     public function setParameters(array $params = []): void
     {
         $array = [];
 
-        if ($params):
-            foreach ($params as $key => $value):
-                $array[] = "{$key}={$value}";
-            endforeach;
-        endif;
+        foreach ($params as $key => $value) :
+            $array[] = "{$key}={$value}";
+        endforeach;
 
         $this->parameters = join(';', $array);
     }
@@ -73,24 +65,21 @@ class ConsultaSQL
     /**
      * @return array
      */
-
     public function execute(): array
     {
         try {
 
-            $execute = $this->connection->RealizarConsultaSQL([
+            $execute = $this->adapterInterface->RealizarConsultaSQL([
                 'codSentenca' => $this->sentence,
                 'codColigada' => $this->affiliate,
                 'codSistema' => $this->system,
                 'parameters' => $this->parameters,
             ]);
 
-            $result = Serialize::result($execute->RealizarConsultaSQLResult);
-
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
 
-        return ['response' => (isset($result['Resultado']) ? $result['Resultado'] : false)];
+        return $execute->RealizarConsultaSQLResult;
     }
 }
