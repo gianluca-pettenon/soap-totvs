@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Connection;
+namespace App\Adapter;
 
+use App\Interface\AdapterInterface;
 use Laminas\Soap\Client;
 
-class WebService
+class LaminasAdapter implements AdapterInterface
 {
     /**
      * @param string $path
      * @return Client
      */
-
-    public function getClient(string $path) : Client
+    public function getAdapter(string $path): Client
     {
         try {
 
