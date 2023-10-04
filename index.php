@@ -1,20 +1,29 @@
 <?php
 
+echo phpinfo();
+
 // Composer autoloading
-include_once __DIR__ . '/vendor/autoload.php';
+/*include_once __DIR__ . '/vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
 $dotenv->load();
 
-use App\Adapter\LaminasAdapter;
-use App\WebService\ConsultaSQL;
+use App\Adapters\LaminasAdapter;
+use App\WebServices\Query\{
+    Query,
+    QueryObject
+};
 
-$ws = new ConsultaSQL(new LaminasAdapter);
+$webService = new Query(
+    new LaminasAdapter,
+    new QueryObject(
+        sentence: 'Example.001',
+        affiliate: 1,
+        system: 'S',
+        parameters: ['cdUser' => 1302]
+    )
+);
 
 echo "<pre>";
-var_dump($ws->execute());
-echo "</pre>";
-
-?>
-
-See <a href="/README.md">README.md</a> for more information.
+var_dump($webService);
+echo "</pre>";*/

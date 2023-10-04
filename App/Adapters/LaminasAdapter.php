@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Adapter;
+namespace App\Adapters;
 
-use App\Interface\AdapterInterface;
+use App\Adapters\Contracts\AdapterInterface;
 use Laminas\Soap\Client;
 
 class LaminasAdapter implements AdapterInterface
