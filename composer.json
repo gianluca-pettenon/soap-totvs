@@ -7,9 +7,12 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.1",
         "vlucas/phpdotenv": "^5.5",
         "laminas/laminas-soap": "^2.12"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
     },
     "autoload": {
         "psr-4": {
