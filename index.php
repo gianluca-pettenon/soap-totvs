@@ -1,14 +1,12 @@
 <?php
 
-echo phpinfo();
-
 // Composer autoloading
-/*include_once __DIR__ . '/vendor/autoload.php';
+include_once __DIR__ . '/vendor/autoload.php';
 
 $dotenv = Dotenv\Dotenv::createUnsafeImmutable(__DIR__);
 $dotenv->load();
 
-use App\Adapters\LaminasAdapter;
+/*use App\Adapters\LaminasAdapter;
 use App\WebServices\Query\{
     Query,
     QueryObject
