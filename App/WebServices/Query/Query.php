@@ -24,7 +24,7 @@ class Query
         return $this->adapterInterface->RealizarConsultaSQL(
             [
                 'codSentenca' => $this->queryObject->sentence,
-                'codColigada' => $this->queryObject->affiliate,
+                'codColigada' => $this->queryObject->affiliate->value,
                 'codSistema' => $this->queryObject->system->value,
                 'parameters' => $this->queryObject->parameters
             ]
