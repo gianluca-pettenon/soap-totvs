@@ -6,8 +6,9 @@
 
 namespace App\WebServices\Process;
 
+use App\Enums\WsdlEnum;
 use App\Adapters\Contracts\AdapterInterface;
-use App\WebServices\Process\ProcessObject;
+use App\WebServices\Process\Object\ProcessObject;
 
 class Process
 {
@@ -15,7 +16,7 @@ class Process
         private AdapterInterface $adapterInterface,
         private ProcessObject $processObject
     ) {
-        $adapterInterface->getAdapter('/wsProcess/MEX?wsdl');
+        $adapterInterface->getAdapter(WsdlEnum::PROCESS);
     }
 
     public function execute(): int
@@ -23,8 +24,9 @@ class Process
         return $this->adapterInterface->ExecuteWithXmlParams(
             [
                 'ProcessServerName' => $this->processObject->process,
-                'strXmlParams'      => $this->processObject->xml
+                'strXmlParams' => $this->processObject->xml
             ]
         );
     }
+    
 }
