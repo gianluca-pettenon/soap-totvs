@@ -6,8 +6,9 @@
 
 namespace App\WebServices\Query;
 
+use App\Enums\WsdlEnum;
 use App\Adapters\Contracts\AdapterInterface;
-use App\WebServices\Query\QueryObject;
+use App\WebServices\Query\Object\QueryObject;
 
 class Query
 {
@@ -15,7 +16,7 @@ class Query
         private AdapterInterface $adapterInterface,
         private QueryObject $queryObject
     ) {
-        $adapterInterface->getAdapter('/wsConsultaSQL/MEX?wsdl');
+        $adapterInterface->getAdapter(WsdlEnum::QUERY);
     }
 
     public function execute(): object
@@ -24,9 +25,10 @@ class Query
             [
                 'codSentenca' => $this->queryObject->sentence,
                 'codColigada' => $this->queryObject->affiliate,
-                'codSistema' => $this->queryObject->system,
+                'codSistema' => $this->queryObject->system->value,
                 'parameters' => $this->queryObject->parameters
             ]
         );
     }
+    
 }

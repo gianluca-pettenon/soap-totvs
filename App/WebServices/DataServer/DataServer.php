@@ -6,8 +6,9 @@
 
 namespace App\WebServices\Process;
 
+use App\Enums\WsdlEnum;
 use App\Adapters\Contracts\AdapterInterface;
-use App\WebServices\DataServer\DataServerObject;
+use App\WebServices\DataServer\Object\DataServerObject;
 
 class DataServer
 {
@@ -15,7 +16,7 @@ class DataServer
         private AdapterInterface $adapterInterface,
         private DataServerObject $dataServerObject
     ) {
-        $adapterInterface->getAdapter('/wsDataServer/MEX?wsdl');
+        $adapterInterface->getAdapter(WsdlEnum::PROCESS);
     }
 
     public function saveRecord(): object
@@ -23,7 +24,7 @@ class DataServer
         return $this->adapterInterface->SaveRecord(
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
-                'Contexto' => $this->dataServerObject->context,
+                'Contexto' => $this->dataServerObject->context->value,
                 'XML' => $this->dataServerObject->xml
             ]
         );
@@ -35,7 +36,7 @@ class DataServer
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'PrimaryKey' => $this->dataServerObject->primaryKey,
-                'Contexto' => $this->dataServerObject->context
+                'Contexto' => $this->dataServerObject->context->value
             ]
         );
     }
@@ -46,7 +47,7 @@ class DataServer
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'XML' => $this->dataServerObject->xml,
-                'Contexto' => $this->dataServerObject->context
+                'Contexto' => $this->dataServerObject->context->value
             ]
         );
     }
@@ -57,7 +58,7 @@ class DataServer
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'PrimaryKey' => $this->dataServerObject->primaryKey,
-                'Contexto' => $this->dataServerObject->context,
+                'Contexto' => $this->dataServerObject->context->value
             ]
         );
     }
@@ -68,8 +69,9 @@ class DataServer
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'Filtro' => $this->dataServerObject->filter,
-                'Contexto' => $this->dataServerObject->context
+                'Contexto' => $this->dataServerObject->context->value
             ]
         );
     }
+
 }
