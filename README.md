@@ -28,7 +28,7 @@ composer require gianluca-pettenon/soap-totvs
 
 The SOAP adapter reads the following environment variables:
 
-- `WSHOST` – base URL of the TOTVS server (for example: `https://my-server:8051`)
+- `WSHOST` – base URL of the TOTVS server (for example: `https://localhost:8051`)
 - `WSUSER` – web service user
 - `WSPASS` – web service password
 
