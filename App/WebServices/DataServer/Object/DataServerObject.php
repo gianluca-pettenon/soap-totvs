@@ -1,8 +1,8 @@
 <?php
 
-namespace App\WebServices\DataServer\Object;
+namespace SoapTotvs\WebServices\DataServer\Object;
 
-use App\Enums\ContextEnum;
+use SoapTotvs\Enums\ContextEnum;
 
 final readonly class DataServerObject
 {

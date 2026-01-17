@@ -1,6 +1,6 @@
 <?php
 
-namespace App\WebServices\Process\Object;
+namespace SoapTotvs\WebServices\Process\Object;
 
 final readonly class ProcessObject
 {

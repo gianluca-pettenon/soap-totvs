@@ -4,11 +4,11 @@
  * @link https://tdn.totvs.com/display/public/LRM/TBC+-+Exemplo+Web+Service+Consulta+SQL
  **/
 
-namespace App\WebServices\Query;
+namespace SoapTotvs\WebServices\Query;
 
-use App\Enums\WsdlEnum;
-use App\Adapters\Contracts\AdapterInterface;
-use App\WebServices\Query\Object\QueryObject;
+use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Adapters\Contracts\AdapterInterface;
+use SoapTotvs\WebServices\Query\Object\QueryObject;
 
 class Query
 {
@@ -16,12 +16,13 @@ class Query
         private AdapterInterface $adapterInterface,
         private QueryObject $queryObject
     ) {
-        $adapterInterface->getAdapter(WsdlEnum::QUERY);
     }
 
     public function execute(): object
     {
-        return $this->adapterInterface->RealizarConsultaSQL(
+        return $this->adapterInterface->call(
+            WsdlEnum::QUERY,
+            'RealizarConsultaSQL',
             [
                 'codSentenca' => $this->queryObject->sentence,
                 'codColigada' => $this->queryObject->affiliate->value,

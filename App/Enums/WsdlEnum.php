@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enums;
+namespace SoapTotvs\Enums;
 
 enum WsdlEnum: string
 {
