@@ -1,6 +1,4 @@
-# soap-totvs
-
-- PHP SDK for consuming TOTVS Web Services over SOAP.
+- `PHP SDK` for consuming `TOTVS Web Services` over `SOAP`.
 
 ---
 
