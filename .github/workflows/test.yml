@@ -1,15 +1,12 @@
 name: Tests
 
 on:
-  workflow_run:
-    workflows:
-      - Lint
-    types:
-      - completed
+  pull_request:
+    branches:
+      - master
 
 jobs:
   tests:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -25,6 +22,9 @@ jobs:
 
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: Run PHPStan
+        run: composer lint
 
       - name: Run PHPUnit
         run: composer test
