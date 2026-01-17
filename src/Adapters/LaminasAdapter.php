@@ -9,7 +9,7 @@ use Laminas\Soap\Client;
 
 class LaminasAdapter implements AdapterInterface
 {
-    private function createClient(WsdlEnum $wsdlEnum): Client
+    protected function createClient(WsdlEnum $wsdlEnum): Client
     {
         return new Client(getenv('WSHOST') . $wsdlEnum->value, [
             'login' => getenv('WSUSER'),
@@ -29,4 +29,3 @@ class LaminasAdapter implements AdapterInterface
     }
 
 }
-
