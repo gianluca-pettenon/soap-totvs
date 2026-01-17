@@ -4,6 +4,13 @@ on:
   pull_request:
     branches:
       - master
+  push:
+    branches:
+      - master
+    tags:
+      - '*'
+  schedule:
+    - cron: '0 * * * *'
 
 jobs:
   tests:

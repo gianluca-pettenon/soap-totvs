@@ -1,6 +1,8 @@
 <p align="center">
-    <img src="https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs" alt="Packagist Version">
     <img src="https://img.shields.io/codecov/c/github/gianluca-pettenon/soap-totvs" alt="Code Coverage">
+    <img src="https://img.shields.io/packagist/dt/gianluca-pettenon/soap-totvs" alt="Total Downloads">
+    <img src="https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs" alt="Latest Stable Version">
+    <img src="https://img.shields.io/packagist/l/gianluca-pettenon/soap-totvs" alt="License">
 </p>
 
 ---
