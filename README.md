@@ -1,4 +1,8 @@
-- `PHP SDK` for consuming `TOTVS Web Services` over `SOAP`.
+<p align="center">
+  <a href="https://packagist.org/packages/gianluca-pettenon/soap-totvs">
+    <img src="https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs.svg?label=soap-totvs&labelColor=orange&color=555555">
+  </a>
+</p>
 
 ---
 
@@ -135,27 +139,3 @@ $view = $gateway->dataServer()->readView(
 
 For details about specific parameters, constraints and behaviors of each web service, refer to the official TOTVS documentation.  
 Each class under `SoapTotvs\WebServices` contains a link to the corresponding TOTVS docs.
-
----
-
-## Development
-
-This repository provides Composer scripts to mirror the CI behavior locally:
-
-- Run static analysis with PHPStan:
-
-```bash
-composer lint
-```
-
-- Run the test suite with PHPUnit:
-
-```bash
-composer test
-```
-
-Both commands require dependencies to be installed first:
-
-```bash
-composer install
-```

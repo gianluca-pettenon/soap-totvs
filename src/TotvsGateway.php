@@ -29,3 +29,4 @@ final class TotvsGateway
         return new DataServerGateway($this->adapter);
     }
 }
+

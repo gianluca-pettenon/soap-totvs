@@ -8,3 +8,4 @@ enum WsdlEnum: string
     case DATASERVER = '/wsDataServer/MEX?wsdl';
     case PROCESS = '/wsProcess/MEX?wsdl';
 }
+

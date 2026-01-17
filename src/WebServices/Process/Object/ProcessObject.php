@@ -10,3 +10,4 @@ final readonly class ProcessObject
     ) {
     }
 }
+

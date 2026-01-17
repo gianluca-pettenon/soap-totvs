@@ -2,8 +2,10 @@ services:
 
   php-fpm:
     build: .
-    working_dir: /App
+    working_dir: /app
     container_name: php-fpm
+    ports:
+      - "8080:8080"
     volumes:
-      - '.:/App'
-      - /var/www/html/vendor
+      - '.:/app'
+      - /var/www/html/vendor:/app/vendor

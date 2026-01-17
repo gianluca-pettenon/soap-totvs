@@ -1,15 +1,18 @@
 {
     "name": "gianluca-pettenon/soap-totvs",
+    "license": "MIT",
     "authors": [
         {
             "name": "Gianluca Pettenon",
-            "homepage": "https://gianlucapettenon.dev"
+            "email": "contact@gianlucapettenon.dev",
+            "homepage": "https://gianlucapettenon.dev",
+            "role": "Developer"
         }
     ],
     "scripts": {
-        "start": "php -S localhost:8080",
-        "lint": "vendor/bin/phpstan analyse",
-        "test": "vendor/bin/phpunit"
+        "start": "php -d display_errors=1 -d display_startup_errors=1 -d error_reporting=E_ALL -S 0.0.0.0:8080 -t .",
+        "lint": "php vendor/bin/phpstan analyse",
+        "test": "php vendor/bin/phpunit"
     },
     "require": {
         "php": ">=8.4",
@@ -21,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SoapTotvs\\": "App/"
+            "SoapTotvs\\": "src/"
         }
     },
     "autoload-dev": {

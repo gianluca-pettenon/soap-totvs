@@ -12,3 +12,4 @@ enum OperationEnum: string
     case DELETE_RECORD_BY_KEY = 'DeleteRecordByKey';
     case READ_VIEW = 'ReadView';
 }
+

@@ -17,3 +17,4 @@ final readonly class QueryObject
     ) {
     }
 }
+

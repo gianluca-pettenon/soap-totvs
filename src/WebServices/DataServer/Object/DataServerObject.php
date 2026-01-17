@@ -15,3 +15,4 @@ final readonly class DataServerObject
     ) {
     }
 }
+

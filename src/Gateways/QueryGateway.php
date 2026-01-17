@@ -34,3 +34,4 @@ final class QueryGateway
         return $query->execute();
     }
 }
+

@@ -6,3 +6,4 @@ enum AffiliateEnum: int
 {
     case DEFAULT = 1;
 }
+

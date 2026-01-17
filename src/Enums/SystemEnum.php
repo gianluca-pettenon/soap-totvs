@@ -6,3 +6,4 @@ enum SystemEnum: string
 {
     case EDUCATIONAL = 'S';
 }
+

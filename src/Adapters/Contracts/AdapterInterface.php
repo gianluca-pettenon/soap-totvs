@@ -9,3 +9,4 @@ interface AdapterInterface
 {
     public function call(WsdlEnum $wsdlEnum, OperationEnum $operation, array $parameters): mixed;
 }
+
