@@ -1,8 +1,8 @@
 <?php
 
-namespace App\WebServices\Query\Object;
+namespace SoapTotvs\WebServices\Query\Object;
 
-use App\Enums\{
+use SoapTotvs\Enums\{
     SystemEnum,
     AffiliateEnum
 };

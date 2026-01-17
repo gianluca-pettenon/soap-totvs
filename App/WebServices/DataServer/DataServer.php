@@ -4,11 +4,12 @@
  * @link https://tdn.totvs.com/display/public/LRM/TBC+-+Web+Service+DataServer
  **/
 
-namespace App\WebServices\Process;
+namespace SoapTotvs\WebServices\DataServer;
 
-use App\Enums\WsdlEnum;
-use App\Adapters\Contracts\AdapterInterface;
-use App\WebServices\DataServer\Object\DataServerObject;
+use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
+use SoapTotvs\Adapters\Contracts\AdapterInterface;
+use SoapTotvs\WebServices\DataServer\Object\DataServerObject;
 
 class DataServer
 {
@@ -16,12 +17,13 @@ class DataServer
         private AdapterInterface $adapterInterface,
         private DataServerObject $dataServerObject
     ) {
-        $adapterInterface->getAdapter(WsdlEnum::PROCESS);
     }
 
     public function saveRecord(): object
     {
-        return $this->adapterInterface->SaveRecord(
+        return $this->adapterInterface->call(
+            WsdlEnum::DATASERVER,
+            OperationEnum::SAVE_RECORD,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'Contexto' => $this->dataServerObject->context->value,
@@ -32,7 +34,9 @@ class DataServer
 
     public function readRecord(): object
     {
-        return $this->adapterInterface->ReadRecord(
+        return $this->adapterInterface->call(
+            WsdlEnum::DATASERVER,
+            OperationEnum::READ_RECORD,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'PrimaryKey' => $this->dataServerObject->primaryKey,
@@ -43,7 +47,9 @@ class DataServer
 
     public function deleteRecord(): object
     {
-        return $this->adapterInterface->DeleteRecord(
+        return $this->adapterInterface->call(
+            WsdlEnum::DATASERVER,
+            OperationEnum::DELETE_RECORD,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'XML' => $this->dataServerObject->xml,
@@ -54,7 +60,9 @@ class DataServer
 
     public function deleteRecordByKey(): object
     {
-        return $this->adapterInterface->DeleteRecordByKey(
+        return $this->adapterInterface->call(
+            WsdlEnum::DATASERVER,
+            OperationEnum::DELETE_RECORD_BY_KEY,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'PrimaryKey' => $this->dataServerObject->primaryKey,
@@ -65,7 +73,9 @@ class DataServer
 
     public function readView(): object
     {
-        return $this->adapterInterface->ReadView(
+        return $this->adapterInterface->call(
+            WsdlEnum::DATASERVER,
+            OperationEnum::READ_VIEW,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'Filtro' => $this->dataServerObject->filter,

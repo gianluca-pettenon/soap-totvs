@@ -4,11 +4,12 @@
  * @link https://tdn.totvs.com/display/public/LRM/TBC+-+Web+Service+Process
  **/
 
-namespace App\WebServices\Process;
+namespace SoapTotvs\WebServices\Process;
 
-use App\Enums\WsdlEnum;
-use App\Adapters\Contracts\AdapterInterface;
-use App\WebServices\Process\Object\ProcessObject;
+use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
+use SoapTotvs\Adapters\Contracts\AdapterInterface;
+use SoapTotvs\WebServices\Process\Object\ProcessObject;
 
 class Process
 {
@@ -16,12 +17,13 @@ class Process
         private AdapterInterface $adapterInterface,
         private ProcessObject $processObject
     ) {
-        $adapterInterface->getAdapter(WsdlEnum::PROCESS);
     }
 
     public function execute(): int
     {
-        return $this->adapterInterface->ExecuteWithXmlParams(
+        return (int) $this->adapterInterface->call(
+            WsdlEnum::PROCESS,
+            OperationEnum::EXECUTE_WITH_XML_PARAMS,
             [
                 'ProcessServerName' => $this->processObject->process,
                 'strXmlParams' => $this->processObject->xml

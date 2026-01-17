@@ -1,18 +1,15 @@
 <?php
 
-namespace App\Adapters;
+namespace SoapTotvs\Adapters;
 
-use App\Adapters\Contracts\AdapterInterface;
-use App\Enums\WsdlEnum;
+use SoapTotvs\Adapters\Contracts\AdapterInterface;
+use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
 use Laminas\Soap\Client;
 
 class LaminasAdapter implements AdapterInterface
 {
-    /**
-     * @param WsdlEnum $wsdlEnum
-     * @return Client
-     */
-    public function getAdapter(WsdlEnum $wsdlEnum): Client
+    private function createClient(WsdlEnum $wsdlEnum): Client
     {
         return new Client(getenv('WSHOST') . $wsdlEnum->value, [
             'login' => getenv('WSUSER'),
@@ -22,6 +19,13 @@ class LaminasAdapter implements AdapterInterface
             'keep_alive' => false,
             'connection_timeout' => 25000
         ]);
+    }
+
+    public function call(WsdlEnum $wsdlEnum, OperationEnum $operation, array $parameters): mixed
+    {
+        $client = $this->createClient($wsdlEnum);
+
+        return $client->call($operation->value, $parameters);
     }
 
 }

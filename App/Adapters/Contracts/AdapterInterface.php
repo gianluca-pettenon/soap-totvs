@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Adapters\Contracts;
+namespace SoapTotvs\Adapters\Contracts;
 
-use App\Enums\WsdlEnum;
+use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
 
 interface AdapterInterface
 {
-    /**
-     * @param WsdlEnum $wsdlEnum
-     * @return mixed
-     */
-    public function getAdapter(WsdlEnum $wsdlEnum): mixed;
+    public function call(WsdlEnum $wsdlEnum, OperationEnum $operation, array $parameters): mixed;
 }
