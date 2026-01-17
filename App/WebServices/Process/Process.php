@@ -7,6 +7,7 @@
 namespace SoapTotvs\WebServices\Process;
 
 use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
 use SoapTotvs\WebServices\Process\Object\ProcessObject;
 
@@ -22,7 +23,7 @@ class Process
     {
         return (int) $this->adapterInterface->call(
             WsdlEnum::PROCESS,
-            'ExecuteWithXmlParams',
+            OperationEnum::EXECUTE_WITH_XML_PARAMS,
             [
                 'ProcessServerName' => $this->processObject->process,
                 'strXmlParams' => $this->processObject->xml

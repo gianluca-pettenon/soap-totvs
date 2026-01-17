@@ -4,6 +4,7 @@ namespace SoapTotvs\Adapters;
 
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
 use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
 use Laminas\Soap\Client;
 
 class LaminasAdapter implements AdapterInterface
@@ -20,11 +21,11 @@ class LaminasAdapter implements AdapterInterface
         ]);
     }
 
-    public function call(WsdlEnum $wsdlEnum, string $operation, array $parameters): mixed
+    public function call(WsdlEnum $wsdlEnum, OperationEnum $operation, array $parameters): mixed
     {
         $client = $this->createClient($wsdlEnum);
 
-        return $client->__soapCall($operation, [$parameters]);
+        return $client->call($operation->value, $parameters);
     }
 
 }

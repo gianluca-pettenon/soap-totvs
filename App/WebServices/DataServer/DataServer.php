@@ -7,6 +7,7 @@
 namespace SoapTotvs\WebServices\DataServer;
 
 use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
 use SoapTotvs\WebServices\DataServer\Object\DataServerObject;
 
@@ -22,7 +23,7 @@ class DataServer
     {
         return $this->adapterInterface->call(
             WsdlEnum::DATASERVER,
-            'SaveRecord',
+            OperationEnum::SAVE_RECORD,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'Contexto' => $this->dataServerObject->context->value,
@@ -35,7 +36,7 @@ class DataServer
     {
         return $this->adapterInterface->call(
             WsdlEnum::DATASERVER,
-            'ReadRecord',
+            OperationEnum::READ_RECORD,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'PrimaryKey' => $this->dataServerObject->primaryKey,
@@ -48,7 +49,7 @@ class DataServer
     {
         return $this->adapterInterface->call(
             WsdlEnum::DATASERVER,
-            'DeleteRecord',
+            OperationEnum::DELETE_RECORD,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'XML' => $this->dataServerObject->xml,
@@ -61,7 +62,7 @@ class DataServer
     {
         return $this->adapterInterface->call(
             WsdlEnum::DATASERVER,
-            'DeleteRecordByKey',
+            OperationEnum::DELETE_RECORD_BY_KEY,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'PrimaryKey' => $this->dataServerObject->primaryKey,
@@ -74,7 +75,7 @@ class DataServer
     {
         return $this->adapterInterface->call(
             WsdlEnum::DATASERVER,
-            'ReadView',
+            OperationEnum::READ_VIEW,
             [
                 'DataServerName' => $this->dataServerObject->dataServer,
                 'Filtro' => $this->dataServerObject->filter,

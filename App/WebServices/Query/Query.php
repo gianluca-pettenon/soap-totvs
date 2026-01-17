@@ -7,6 +7,7 @@
 namespace SoapTotvs\WebServices\Query;
 
 use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\OperationEnum;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
 use SoapTotvs\WebServices\Query\Object\QueryObject;
 
@@ -22,7 +23,7 @@ class Query
     {
         return $this->adapterInterface->call(
             WsdlEnum::QUERY,
-            'RealizarConsultaSQL',
+            OperationEnum::REALIZE_SQL_QUERY,
             [
                 'codSentenca' => $this->queryObject->sentence,
                 'codColigada' => $this->queryObject->affiliate->value,
