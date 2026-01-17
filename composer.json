@@ -23,5 +23,10 @@
         "psr-4": {
             "SoapTotvs\\": "App/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SoapTotvs\\Tests\\": "tests/"
+        }
     }
 }
