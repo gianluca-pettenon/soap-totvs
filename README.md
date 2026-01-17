@@ -6,7 +6,7 @@
 
 ## Requirements
 
-- PHP >= 8.5
+- PHP >= 8.4
 - Composer
 - Enabled SOAP extension (`php-soap`)
 
