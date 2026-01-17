@@ -1,4 +1,4 @@
-name: Publish to Packagist
+name: publish
 
 on:
   push:
@@ -29,12 +29,28 @@ jobs:
       - name: Run tests
         run: composer test
 
-      - name: Trigger Packagist update
+      - name: Publish to Packagist
         env:
           PACKAGIST_USERNAME: ${{ secrets.PACKAGIST_USERNAME }}
           PACKAGIST_TOKEN: ${{ secrets.PACKAGIST_TOKEN }}
         run: |
-          curl -X POST \
+          PACKAGE_NAME=$(composer config name 2>/dev/null | tr -d '\n')
+          
+          echo "Publishing package: ${PACKAGE_NAME}"
+          echo "Tag version: ${GITHUB_REF_NAME}"
+          
+          RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
             -H "Content-Type: application/json" \
-            -d '{"repository":{"url":"https://github.com/'"${GITHUB_REPOSITORY}"'"}}' \
-            "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_TOKEN}"
+            -d "{\"repository\":{\"url\":\"https://github.com/${GITHUB_REPOSITORY}\"}}" \
+            "https://packagist.org/api/update-package?username=${PACKAGIST_USERNAME}&apiToken=${PACKAGIST_TOKEN}")
+          
+          STATUS_CODE=$(echo "$RESPONSE" | tail -n1)
+          BODY=$(echo "$RESPONSE" | sed '$d')
+          
+          if [ "$STATUS_CODE" -eq 202 ] || [ "$STATUS_CODE" -eq 200 ]; then
+            echo "✅ Package version ${GITHUB_REF_NAME} published successfully!"
+          else
+            echo "❌ Failed to publish package. Status: $STATUS_CODE"
+            echo "Response: $BODY"
+            exit 1
+          fi
