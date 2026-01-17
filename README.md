@@ -1,16 +1,13 @@
-<p align="center">
-  <a href="https://packagist.org/packages/gianluca-pettenon/soap-totvs">
-    <img src="https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs.svg?label=soap-totvs&labelColor=orange&color=555555">
-  </a>
-</p>
+[![Packagist Version](https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs.svg?label=soap-totvs&labelColor=orange&color=555555)](https://packagist.org/packages/gianluca-pettenon/soap-totvs)
+[![codecov](https://codecov.io/gh/gianluca-pettenon/soap-totvs/branch/master/graph/badge.svg)](https://codecov.io/gh/gianluca-pettenon/soap-totvs)
 
 ---
 
 ## Requirements
 
-- PHP >= 8.4
-- Composer
-- Enabled SOAP extension (`php-soap`)
+- `PHP` >= `8.4`
+- `Composer`
+- Enabled `SOAP` extension (`php-soap`)
 
 ---
 
@@ -26,7 +23,7 @@ composer require gianluca-pettenon/soap-totvs
 
 ## Configuration
 
-The SOAP adapter reads the following environment variables:
+The `SOAP` adapter reads the following environment variables:
 
 - `WSHOST` – base URL of the TOTVS server (for example: `https://localhost:8051`)
 - `WSUSER` – web service user
