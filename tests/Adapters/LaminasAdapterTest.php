@@ -41,5 +41,21 @@ final class LaminasAdapterTest extends TestCase
 
         $this->assertEquals((object) ['result' => 'success'], $result);
     }
-}
 
+    public function testCreateClientIsExecutedUsingEnvironmentConfiguration(): void
+    {
+        putenv('WSHOST=http://example.com');
+        putenv('WSUSER=user');
+        putenv('WSPASS=pass');
+
+        $adapter = new LaminasAdapter();
+
+        $reflection = new \ReflectionClass(LaminasAdapter::class);
+        $method = $reflection->getMethod('createClient');
+        $method->setAccessible(true);
+
+        $client = $method->invoke($adapter, WsdlEnum::QUERY);
+
+        $this->assertInstanceOf(Client::class, $client);
+    }
+}

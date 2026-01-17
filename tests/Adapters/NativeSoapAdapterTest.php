@@ -41,6 +41,23 @@ final class NativeSoapAdapterTest extends TestCase
         $this->assertEquals((object) ['result' => 'success'], $result);
     }
 
+    public function testCreateClientIsExecutedUsingEnvironmentConfiguration(): void
+    {
+        putenv('WSHOST=http://invalid-host');
+        putenv('WSUSER=user');
+        putenv('WSPASS=pass');
+
+        $adapter = new NativeSoapAdapter(['trace' => 1]);
+
+        $reflection = new \ReflectionClass(NativeSoapAdapter::class);
+        $method = $reflection->getMethod('createClient');
+        $method->setAccessible(true);
+
+        $this->expectException(\SoapFault::class);
+
+        $method->invoke($adapter, WsdlEnum::QUERY);
+    }
+
     public function testCallSupportsNamedArguments(): void
     {
         $mockSoapClient = $this->createMock(SoapClient::class);
