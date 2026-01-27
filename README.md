@@ -1,4 +1,5 @@
 <p align="center">
+    <img src="https://img.shields.io/static/v1?label=php&message=8.4&color=18181B&labelColor=5354FD" alt="PHP version">
     <img src="https://img.shields.io/codecov/c/github/gianluca-pettenon/soap-totvs" alt="Code Coverage">
     <img src="https://img.shields.io/packagist/dt/gianluca-pettenon/soap-totvs" alt="Total Downloads">
     <img src="https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs" alt="Latest Stable Version">
