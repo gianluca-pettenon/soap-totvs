@@ -1,0 +1,40 @@
+name: PHP
+description: Install PHP 8.4, restore the Composer download cache, and install dependencies.
+
+inputs:
+  coverage:
+    description: Coverage driver passed to setup-php. Use none or pcov.
+    required: false
+    default: none
+
+runs:
+  using: composite
+  steps:
+    - name: Set up PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: "8.4"
+        extensions: soap, mbstring
+        coverage: ${{ inputs.coverage }}
+
+    - name: Register problem matchers
+      shell: bash
+      run: |
+        echo "::add-matcher::${RUNNER_TOOL_CACHE}/php.json"
+        echo "::add-matcher::${RUNNER_TOOL_CACHE}/phpunit.json"
+
+    - name: Resolve Composer cache directory
+      id: composer-cache
+      shell: bash
+      run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
+    - name: Cache Composer packages
+      uses: actions/cache@v6
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('composer.json') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install dependencies
+      shell: bash
+      run: composer install --no-interaction --no-progress --prefer-dist
