@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace SoapTotvs\Tests\Adapters;
 
 use Laminas\Soap\Client;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
-use SoapTotvs\Adapters\LaminasAdapter;
-use SoapTotvs\Enums\OperationEnum;
-use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Adapters\{LaminasAdapter, SoapConfig};
+use SoapTotvs\Enums\{OperationEnum, WsdlEnum};
 
 final class LaminasAdapterTest extends TestCase
 {
-    public function testCallDelegatesToLaminasClientCorrectly(): void
+    #[Test]
+    public function callForwardsNamedParametersToLaminasClient(): void
     {
         $mockClient = $this->createMock(Client::class);
 
@@ -20,11 +21,12 @@ final class LaminasAdapterTest extends TestCase
             ->method('call')
             ->with(
                 'RealizarConsultaSQL',
-                ['param1', 'param2']
+                ['codSentenca' => 'Example.001']
             )
             ->willReturn((object) ['result' => 'success']);
 
         $adapter = $this->getMockBuilder(LaminasAdapter::class)
+            ->disableOriginalConstructor()
             ->onlyMethods(['createClient'])
             ->getMock();
 
@@ -36,24 +38,18 @@ final class LaminasAdapterTest extends TestCase
         $result = $adapter->call(
             WsdlEnum::QUERY,
             OperationEnum::REALIZE_SQL_QUERY,
-            ['param1', 'param2']
+            ['codSentenca' => 'Example.001']
         );
 
         $this->assertEquals((object) ['result' => 'success'], $result);
     }
 
-    public function testCreateClientIsExecutedUsingEnvironmentConfiguration(): void
+    #[Test]
+    public function createClientUsesSoapConfig(): void
     {
-        putenv('WSHOST=http://example.com');
-        putenv('WSUSER=user');
-        putenv('WSPASS=pass');
+        $adapter = new LaminasAdapter(new SoapConfig('http://example.com', 'user', 'pass'));
 
-        $adapter = new LaminasAdapter();
-
-        $reflection = new \ReflectionClass(LaminasAdapter::class);
-        $method = $reflection->getMethod('createClient');
-        $method->setAccessible(true);
-
+        $method = new \ReflectionMethod(LaminasAdapter::class, 'createClient');
         $client = $method->invoke($adapter, WsdlEnum::QUERY);
 
         $this->assertInstanceOf(Client::class, $client);

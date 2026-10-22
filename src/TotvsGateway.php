@@ -3,9 +3,7 @@
 namespace SoapTotvs;
 
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
-use SoapTotvs\Gateways\DataServerGateway;
-use SoapTotvs\Gateways\ProcessGateway;
-use SoapTotvs\Gateways\QueryGateway;
+use SoapTotvs\Gateways\{DataServerGateway, ProcessGateway, QueryGateway};
 
 final class TotvsGateway
 {

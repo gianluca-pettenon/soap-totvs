@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace SoapTotvs\Tests\Gateways;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
-use SoapTotvs\Enums\OperationEnum;
-use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\{OperationEnum, WsdlEnum};
 use SoapTotvs\Gateways\ProcessGateway;
 
 final class ProcessGatewayTest extends TestCase
 {
-    public function testExecuteCallsAdapterCorrectly(): void
+    #[Test]
+    public function executeCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
