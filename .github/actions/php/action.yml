@@ -1,5 +1,5 @@
 name: PHP
-description: Install PHP 8.4, restore the Composer download cache, and install dependencies.
+description: Install PHP 8.5, restore the Composer download cache, and install dependencies.
 
 inputs:
   coverage:
@@ -13,7 +13,7 @@ runs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: "8.4"
+        php-version: "8.5"
         extensions: soap, mbstring
         coverage: ${{ inputs.coverage }}
 
