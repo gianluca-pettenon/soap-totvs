@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://img.shields.io/static/v1?label=php&message=8.4&color=18181B&labelColor=5354FD" alt="PHP version">
+    <img src="https://img.shields.io/static/v1?label=php&message=8.5&color=18181B&labelColor=5354FD" alt="PHP version">
     <img src="https://img.shields.io/codecov/c/github/gianluca-pettenon/soap-totvs" alt="Code Coverage">
     <img src="https://img.shields.io/packagist/dt/gianluca-pettenon/soap-totvs" alt="Total Downloads">
     <img src="https://img.shields.io/packagist/v/gianluca-pettenon/soap-totvs" alt="Latest Stable Version">
@@ -10,7 +10,7 @@
 
 ## Requirements
 
-- `PHP` >= `8.4`
+- `PHP` >= `8.5`
 - `Composer`
 - Enabled `SOAP` extension (`php-soap`)
 
@@ -28,14 +28,21 @@ composer require gianluca-pettenon/soap-totvs
 
 ## Configuration
 
-The `SOAP` adapter reads the following environment variables:
+Pass the host, user and password to `SoapConfig`. The fourth argument is extra SoapClient options and overrides the defaults (`connection_timeout` is 25 seconds).
 
-- `WSHOST` – base URL of the TOTVS server (for example: `https://localhost:8051`)
-- `WSUSER` – web service user
-- `WSPASS` – web service password
+```php
+use SoapTotvs\Adapters\LaminasAdapter;
+use SoapTotvs\Adapters\SoapConfig;
+use SoapTotvs\TotvsGateway;
 
-You can use any environment management solution (like `vlucas/phpdotenv`) in your application
-to load these variables into the environment before creating the `TotvsGateway`.
+$gateway = new TotvsGateway(
+    adapter: new LaminasAdapter(new SoapConfig(
+        host: 'https://localhost:8051',
+        user: 'user',
+        password: 'secret',
+    ))
+);
+```
 
 ---
 
@@ -52,9 +59,14 @@ Example of basic bootstrap:
 ```php
 use SoapTotvs\TotvsGateway;
 use SoapTotvs\Adapters\LaminasAdapter;
+use SoapTotvs\Adapters\SoapConfig;
 
 $gateway = new TotvsGateway(
-    adapter: new LaminasAdapter()
+    adapter: new LaminasAdapter(new SoapConfig(
+        host: 'https://localhost:8051',
+        user: 'user',
+        password: 'secret',
+    ))
 );
 ```
 
@@ -62,22 +74,25 @@ $gateway = new TotvsGateway(
 
 ## SQL Query Web Service
 
+`affiliate` is the coligada code. `system` is the RM system code (`S` for educational).
+
 ```php
 use SoapTotvs\TotvsGateway;
 use SoapTotvs\Adapters\LaminasAdapter;
-use SoapTotvs\Enums\{
-    SystemEnum,
-    AffiliateEnum
-};
+use SoapTotvs\Adapters\SoapConfig;
 
 $gateway = new TotvsGateway(
-    adapter: new LaminasAdapter()
+    adapter: new LaminasAdapter(new SoapConfig(
+        host: 'https://localhost:8051',
+        user: 'user',
+        password: 'secret',
+    ))
 );
 
 $result = $gateway->query()->execute(
     sentence: 'Example.001',
-    affiliate: AffiliateEnum::DEFAULT,
-    system: SystemEnum::EDUCATIONAL,
+    affiliate: 1,
+    system: 'S',
     parameters: ['cdUser' => 1302]
 );
 ```
@@ -89,9 +104,14 @@ $result = $gateway->query()->execute(
 ```php
 use SoapTotvs\TotvsGateway;
 use SoapTotvs\Adapters\LaminasAdapter;
+use SoapTotvs\Adapters\SoapConfig;
 
 $gateway = new TotvsGateway(
-    adapter: new LaminasAdapter()
+    adapter: new LaminasAdapter(new SoapConfig(
+        host: 'https://localhost:8051',
+        user: 'user',
+        password: 'secret',
+    ))
 );
 
 $result = $gateway->process()->execute(
@@ -104,33 +124,39 @@ $result = $gateway->process()->execute(
 
 ## DataServer Web Service
 
+`context` is the DataServer context (`int` or `string`, for example `CODCOLIGADA=1;CODSISTEMA=S`).
+
 ```php
 use SoapTotvs\TotvsGateway;
 use SoapTotvs\Adapters\LaminasAdapter;
-use SoapTotvs\Enums\ContextEnum;
+use SoapTotvs\Adapters\SoapConfig;
 
 $gateway = new TotvsGateway(
-    adapter: new LaminasAdapter()
+    adapter: new LaminasAdapter(new SoapConfig(
+        host: 'https://localhost:8051',
+        user: 'user',
+        password: 'secret',
+    ))
 );
 
 // SaveRecord
 $save = $gateway->dataServer()->saveRecord(
     dataServer: 'DataServerName',
-    context: ContextEnum::DEFAULT,
+    context: 'CODCOLIGADA=1;CODSISTEMA=S',
     xml: '<Data></Data>'
 );
 
 // ReadRecord
 $record = $gateway->dataServer()->readRecord(
     dataServer: 'DataServerName',
-    context: ContextEnum::DEFAULT,
+    context: 'CODCOLIGADA=1;CODSISTEMA=S',
     primaryKey: 123
 );
 
 // ReadView
 $view = $gateway->dataServer()->readView(
     dataServer: 'ViewName',
-    context: ContextEnum::DEFAULT,
+    context: 'CODCOLIGADA=1;CODSISTEMA=S',
     filter: 'FIELD = 1'
 );
 ```
@@ -140,4 +166,4 @@ $view = $gateway->dataServer()->readView(
 ## Further Documentation
 
 For details about specific parameters, constraints and behaviors of each web service, refer to the official TOTVS documentation.  
-Each class under `SoapTotvs\WebServices` contains a link to the corresponding TOTVS docs.
+Each gateway class contains a link to the corresponding TOTVS docs.

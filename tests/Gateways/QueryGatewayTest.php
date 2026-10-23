@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace SoapTotvs\Tests\Gateways;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
-use SoapTotvs\Enums\AffiliateEnum;
-use SoapTotvs\Enums\OperationEnum;
-use SoapTotvs\Enums\SystemEnum;
-use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\{OperationEnum, WsdlEnum};
 use SoapTotvs\Gateways\QueryGateway;
 
 final class QueryGatewayTest extends TestCase
 {
-    public function testExecuteCallsAdapterCorrectly(): void
+    #[Test]
+    public function executeCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
@@ -24,8 +23,8 @@ final class QueryGatewayTest extends TestCase
                 OperationEnum::REALIZE_SQL_QUERY,
                 [
                     'codSentenca' => 'QUERY.TEST',
-                    'codColigada' => AffiliateEnum::DEFAULT->value,
-                    'codSistema' => SystemEnum::EDUCATIONAL->value,
+                    'codColigada' => 1,
+                    'codSistema' => 'S',
                     'parameters' => ['p1' => 'v1']
                 ]
             )
@@ -34,8 +33,8 @@ final class QueryGatewayTest extends TestCase
         $gateway = new QueryGateway($adapter);
         $result = $gateway->execute(
             sentence: 'QUERY.TEST',
-            affiliate: AffiliateEnum::DEFAULT,
-            system: SystemEnum::EDUCATIONAL,
+            affiliate: 1,
+            system: 'S',
             parameters: ['p1' => 'v1']
         );
 

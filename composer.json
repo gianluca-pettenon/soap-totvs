@@ -15,7 +15,7 @@
         "test": "php vendor/bin/phpunit"
     },
     "require": {
-        "php": ">=8.4",
+        "php": ">=8.5",
         "laminas/laminas-soap": "^2.13"
     },
     "require-dev": {

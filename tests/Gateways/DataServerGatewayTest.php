@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace SoapTotvs\Tests\Gateways;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
-use SoapTotvs\Enums\ContextEnum;
-use SoapTotvs\Enums\OperationEnum;
-use SoapTotvs\Enums\WsdlEnum;
+use SoapTotvs\Enums\{OperationEnum, WsdlEnum};
 use SoapTotvs\Gateways\DataServerGateway;
 
 final class DataServerGatewayTest extends TestCase
 {
-    public function testSaveRecordCallsAdapterCorrectly(): void
+    #[Test]
+    public function saveRecordCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
@@ -23,7 +23,7 @@ final class DataServerGatewayTest extends TestCase
                 OperationEnum::SAVE_RECORD,
                 [
                     'DataServerName' => 'DataServerTest',
-                    'Contexto' => ContextEnum::DEFAULT->value,
+                    'Contexto' => 1,
                     'XML' => '<xml>test</xml>'
                 ]
             )
@@ -32,14 +32,15 @@ final class DataServerGatewayTest extends TestCase
         $gateway = new DataServerGateway($adapter);
         $result = $gateway->saveRecord(
             dataServer: 'DataServerTest',
-            context: ContextEnum::DEFAULT,
+            context: 1,
             xml: '<xml>test</xml>'
         );
 
         $this->assertEquals((object) ['result' => 'saved'], $result);
     }
 
-    public function testReadRecordCallsAdapterCorrectly(): void
+    #[Test]
+    public function readRecordCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
@@ -50,7 +51,7 @@ final class DataServerGatewayTest extends TestCase
                 [
                     'DataServerName' => 'DataServerTest',
                     'PrimaryKey' => 123,
-                    'Contexto' => ContextEnum::DEFAULT->value
+                    'Contexto' => 1
                 ]
             )
             ->willReturn((object) ['result' => 'read']);
@@ -58,14 +59,15 @@ final class DataServerGatewayTest extends TestCase
         $gateway = new DataServerGateway($adapter);
         $result = $gateway->readRecord(
             dataServer: 'DataServerTest',
-            context: ContextEnum::DEFAULT,
+            context: 1,
             primaryKey: 123
         );
 
         $this->assertEquals((object) ['result' => 'read'], $result);
     }
 
-    public function testDeleteRecordCallsAdapterCorrectly(): void
+    #[Test]
+    public function deleteRecordCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
@@ -76,7 +78,7 @@ final class DataServerGatewayTest extends TestCase
                 [
                     'DataServerName' => 'DataServerTest',
                     'XML' => '<xml>delete</xml>',
-                    'Contexto' => ContextEnum::DEFAULT->value
+                    'Contexto' => 1
                 ]
             )
             ->willReturn((object) ['result' => 'deleted']);
@@ -84,14 +86,15 @@ final class DataServerGatewayTest extends TestCase
         $gateway = new DataServerGateway($adapter);
         $result = $gateway->deleteRecord(
             dataServer: 'DataServerTest',
-            context: ContextEnum::DEFAULT,
+            context: 1,
             xml: '<xml>delete</xml>'
         );
 
         $this->assertEquals((object) ['result' => 'deleted'], $result);
     }
 
-    public function testDeleteRecordByKeyCallsAdapterCorrectly(): void
+    #[Test]
+    public function deleteRecordByKeyCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
@@ -102,7 +105,7 @@ final class DataServerGatewayTest extends TestCase
                 [
                     'DataServerName' => 'DataServerTest',
                     'PrimaryKey' => 123,
-                    'Contexto' => ContextEnum::DEFAULT->value
+                    'Contexto' => 1
                 ]
             )
             ->willReturn((object) ['result' => 'deleted_by_key']);
@@ -110,14 +113,15 @@ final class DataServerGatewayTest extends TestCase
         $gateway = new DataServerGateway($adapter);
         $result = $gateway->deleteRecordByKey(
             dataServer: 'DataServerTest',
-            context: ContextEnum::DEFAULT,
+            context: 1,
             primaryKey: 123
         );
 
         $this->assertEquals((object) ['result' => 'deleted_by_key'], $result);
     }
 
-    public function testReadViewCallsAdapterCorrectly(): void
+    #[Test]
+    public function readViewCallsAdapterCorrectly(): void
     {
         $adapter = $this->createMock(AdapterInterface::class);
         $adapter->expects($this->once())
@@ -128,7 +132,7 @@ final class DataServerGatewayTest extends TestCase
                 [
                     'DataServerName' => 'DataServerTest',
                     'Filtro' => 'FILTER=1',
-                    'Contexto' => ContextEnum::DEFAULT->value
+                    'Contexto' => 'CODCOLIGADA=1;CODSISTEMA=S'
                 ]
             )
             ->willReturn((object) ['result' => 'view']);
@@ -136,7 +140,7 @@ final class DataServerGatewayTest extends TestCase
         $gateway = new DataServerGateway($adapter);
         $result = $gateway->readView(
             dataServer: 'DataServerTest',
-            context: ContextEnum::DEFAULT,
+            context: 'CODCOLIGADA=1;CODSISTEMA=S',
             filter: 'FILTER=1'
         );
 

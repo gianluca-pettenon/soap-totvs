@@ -4,18 +4,17 @@ declare(strict_types=1);
 
 namespace SoapTotvs\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use SoapTotvs\Adapters\Contracts\AdapterInterface;
-use SoapTotvs\Enums\OperationEnum;
-use SoapTotvs\Enums\WsdlEnum;
-use SoapTotvs\Gateways\DataServerGateway;
-use SoapTotvs\Gateways\ProcessGateway;
-use SoapTotvs\Gateways\QueryGateway;
+use SoapTotvs\Enums\{OperationEnum, WsdlEnum};
+use SoapTotvs\Gateways\{DataServerGateway, ProcessGateway, QueryGateway};
 use SoapTotvs\TotvsGateway;
 
 final class TotvsGatewayTest extends TestCase
 {
-    public function testQueryGatewayIsReturned(): void
+    #[Test]
+    public function queryGatewayIsReturned(): void
     {
         $gateway = new TotvsGateway(
             adapter: new DummyAdapter()
@@ -24,7 +23,8 @@ final class TotvsGatewayTest extends TestCase
         $this->assertInstanceOf(QueryGateway::class, $gateway->query());
     }
 
-    public function testProcessGatewayIsReturned(): void
+    #[Test]
+    public function processGatewayIsReturned(): void
     {
         $gateway = new TotvsGateway(
             adapter: new DummyAdapter()
@@ -33,7 +33,8 @@ final class TotvsGatewayTest extends TestCase
         $this->assertInstanceOf(ProcessGateway::class, $gateway->process());
     }
 
-    public function testDataServerGatewayIsReturned(): void
+    #[Test]
+    public function dataServerGatewayIsReturned(): void
     {
         $gateway = new TotvsGateway(
             adapter: new DummyAdapter()
@@ -50,4 +51,3 @@ final class DummyAdapter implements AdapterInterface
         return null;
     }
 }
-

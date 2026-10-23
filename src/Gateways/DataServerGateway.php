@@ -1,112 +1,77 @@
 <?php
 
+/**
+ * @link https://tdn.totvs.com/display/public/LRM/TBC+-+Web+Service+DataServer
+ **/
+
 namespace SoapTotvs\Gateways;
 
-use SoapTotvs\Adapters\Contracts\AdapterInterface;
-use SoapTotvs\Enums\ContextEnum;
-use SoapTotvs\WebServices\DataServer\DataServer;
-use SoapTotvs\WebServices\DataServer\Object\DataServerObject;
+use SoapTotvs\Enums\{OperationEnum, WsdlEnum};
 
-final class DataServerGateway
+final class DataServerGateway extends Gateway
 {
-    public function __construct(
-        private AdapterInterface $adapter
-    ) {
+    protected function wsdl(): WsdlEnum
+    {
+        return WsdlEnum::DATASERVER;
     }
 
     public function saveRecord(
         string $dataServer,
-        ContextEnum $context,
+        string|int $context,
         string $xml
     ): object {
-        $dataServerWebService = new DataServer(
-            adapterInterface: $this->adapter,
-            dataServerObject: new DataServerObject(
-                dataServer: $dataServer,
-                context: $context,
-                xml: $xml,
-                primaryKey: null,
-                filter: ''
-            )
-        );
-
-        return $dataServerWebService->saveRecord();
+        return $this->call(OperationEnum::SAVE_RECORD, [
+            'DataServerName' => $dataServer,
+            'Contexto' => $context,
+            'XML' => $xml,
+        ]);
     }
 
     public function readRecord(
         string $dataServer,
-        ContextEnum $context,
+        string|int $context,
         int $primaryKey
     ): object {
-        $dataServerWebService = new DataServer(
-            adapterInterface: $this->adapter,
-            dataServerObject: new DataServerObject(
-                dataServer: $dataServer,
-                context: $context,
-                xml: null,
-                primaryKey: $primaryKey,
-                filter: ''
-            )
-        );
-
-        return $dataServerWebService->readRecord();
+        return $this->call(OperationEnum::READ_RECORD, [
+            'DataServerName' => $dataServer,
+            'PrimaryKey' => $primaryKey,
+            'Contexto' => $context,
+        ]);
     }
 
     public function deleteRecord(
         string $dataServer,
-        ContextEnum $context,
+        string|int $context,
         string $xml
     ): object {
-        $dataServerWebService = new DataServer(
-            adapterInterface: $this->adapter,
-            dataServerObject: new DataServerObject(
-                dataServer: $dataServer,
-                context: $context,
-                xml: $xml,
-                primaryKey: null,
-                filter: ''
-            )
-        );
-
-        return $dataServerWebService->deleteRecord();
+        return $this->call(OperationEnum::DELETE_RECORD, [
+            'DataServerName' => $dataServer,
+            'XML' => $xml,
+            'Contexto' => $context,
+        ]);
     }
 
     public function deleteRecordByKey(
         string $dataServer,
-        ContextEnum $context,
+        string|int $context,
         int $primaryKey
     ): object {
-        $dataServerWebService = new DataServer(
-            adapterInterface: $this->adapter,
-            dataServerObject: new DataServerObject(
-                dataServer: $dataServer,
-                context: $context,
-                xml: null,
-                primaryKey: $primaryKey,
-                filter: ''
-            )
-        );
-
-        return $dataServerWebService->deleteRecordByKey();
+        return $this->call(OperationEnum::DELETE_RECORD_BY_KEY, [
+            'DataServerName' => $dataServer,
+            'PrimaryKey' => $primaryKey,
+            'Contexto' => $context,
+        ]);
     }
 
     public function readView(
         string $dataServer,
-        ContextEnum $context,
+        string|int $context,
         string $filter
     ): object {
-        $dataServerWebService = new DataServer(
-            adapterInterface: $this->adapter,
-            dataServerObject: new DataServerObject(
-                dataServer: $dataServer,
-                context: $context,
-                xml: null,
-                primaryKey: null,
-                filter: $filter
-            )
-        );
-
-        return $dataServerWebService->readView();
+        return $this->call(OperationEnum::READ_VIEW, [
+            'DataServerName' => $dataServer,
+            'Filtro' => $filter,
+            'Contexto' => $context,
+        ]);
     }
 }
-
