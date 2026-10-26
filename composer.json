@@ -19,7 +19,7 @@
         "laminas/laminas-soap": "^2.13"
     },
     "require-dev": {
-        "phpunit/phpunit": "^12.0",
+        "phpunit/phpunit": "^13.4",
         "phpstan/phpstan": "^2.1"
     },
     "autoload": {
