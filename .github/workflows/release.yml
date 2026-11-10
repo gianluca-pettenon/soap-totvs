@@ -35,7 +35,6 @@ jobs:
         with:
           branches: master
           tag_format: ${version}
-          skip_npm_plugin: true
           extra_plugins: |
             @semantic-release/exec
             @semantic-release/git
